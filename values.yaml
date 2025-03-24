@@ -1,0 +1,46 @@
+namespace: lmw-fitness
+GO_ENV: production
+
+image:
+  repository: lmwcode/image:tag
+  pullPolicy: Always
+
+replicaCount: 1
+
+storage:
+  storageClass: nfs-csi
+
+webserver:
+  port: 5052
+  type: NodePort
+  nodePort: 31313
+  host: lmw-fitness.com
+  path: /
+  pathType: Prefix
+
+api:
+  port: 8082
+  type: NodePort  
+  nodePort: 30260
+  host: api.lmw-fitness.com
+  path: /api/
+  pathType: ImplementationSpecific
+
+database:
+  name: gormproject
+  user: postgres
+  port: 5432
+  servicePort: 5433
+  type: ClusterIP
+  sslMode: disable
+
+livenessProbe:
+  initialDelaySeconds: 30
+  timeoutSeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+readinessProbe:
+  initialDelaySeconds: 15
+  timeoutSeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
