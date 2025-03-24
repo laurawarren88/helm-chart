@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-postgres-pvc
+  name: postgres-pvc-{{ .Values.namespace }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Release.Name }}-postgres-service
+    app: postgres-service
     app.kubernetes.io/managed-by: Helm
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}-backend-deployment
+    meta.helm.sh/release-name: backend-deployment-{{ .Values.namespace }}
     meta.helm.sh/release-namespace: {{ .Values.namespace }}
 spec:
-  volumeName: {{ .Release.Name }}-postgres-pv
+  volumeName: postgres-pv-{{ .Values.namespace }}
   storageClassName: {{ .Values.storage.storageClass }}
   accessModes:
     - ReadWriteOnce
@@ -21,11 +21,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Release.Name }}-postgres-pv
+  name: postgres-pv-{{ .Values.namespace }}
   labels:
     app.kubernetes.io/managed-by: Helm
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}-backend-deployment
+    meta.helm.sh/release-name: backend-deployment-{{ .Values.namespace }}
     meta.helm.sh/release-namespace: {{ .Values.namespace }}
 spec:
   storageClassName: {{ .Values.storage.storageClass }}

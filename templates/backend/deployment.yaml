@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-backend-deployment
+  name: backend-deployment-{{ .Values.namespace }}
   namespace: {{ .Values.namespace }}
   labels:
     app: backend
@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/name: backend
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}-backend-deployment
+    meta.helm.sh/release-name: backend-deployment-{{ .Values.namespace }}
     meta.helm.sh/release-namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -29,7 +29,7 @@ spec:
         command: 
         - "sh"
         - "-c"
-        - "until nc -z {{ .Release.Name }}-postgres-service {{ .Values.database.port }}; do echo waiting for postgres; sleep 2; done;"
+        - "until nc -z postgres-service {{ .Values.database.port }}; do echo waiting for postgres; sleep 2; done;"
         resources:
           requests:
             memory: "32Mi"
@@ -54,7 +54,7 @@ spec:
             cpu: "500m"
         envFrom:
         - configMapRef:
-            name: {{ .Release.Name }}-backend-configmap
+            name: backend-configmap-{{ .Values.namespace }}
         env:
         - name: DB_PASSWORD
           valueFrom:
