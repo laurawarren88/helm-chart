@@ -1,16 +1,12 @@
 namespace: lmw-fitness
 GO_ENV: production
-
 image:
   pullPolicy: Always
-
 replicaCount: 1
-
 storage:
   storageClass: nfs-csi
-
 webserver:
-  image: 
+  image:
     repository: lmwcode/image:tag
   port: 5052
   type: NodePort
@@ -18,17 +14,15 @@ webserver:
   host: lmw-fitness.com
   path: /
   pathType: Prefix
-
 api:
-  image: 
-    repository: lmwcode/image:tag
+  image:
+    repository: lmw.nexus.hyades.clusters.easlab.co.uk/backend-go-fitness-locator:7010db25f780795359f1d0c587142ae6e35089bd
   port: 8082
-  type: NodePort  
+  type: NodePort
   nodePort: 30260
   host: api.lmw-fitness.com
   path: /api/
   pathType: ImplementationSpecific
-
 database:
   name: gormproject
   user: postgres
@@ -36,7 +30,6 @@ database:
   servicePort: 5433
   type: ClusterIP
   sslMode: disable
-
 livenessProbe:
   initialDelaySeconds: 30
   timeoutSeconds: 5
