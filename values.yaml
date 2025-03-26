@@ -7,7 +7,7 @@ storage:
   storageClass: nfs-csi
 webserver:
   image:
-    repository: lmwcode/image:tag
+    repository: lmw.nexus.hyades.clusters.easlab.co.uk/react-frontend-fitness-locator:41b30d6707bd6ab193723d5fdfdb9acd21229f37
   port: 5052
   type: NodePort
   nodePort: 31313
